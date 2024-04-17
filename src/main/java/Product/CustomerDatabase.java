@@ -31,7 +31,7 @@ public class CustomerDatabase {
 	 */
 	public void  addCustomer(Customer customer) {
 
-		Customer.add(customer);
+		customers.add(customer);
 	}
 
 	/**
