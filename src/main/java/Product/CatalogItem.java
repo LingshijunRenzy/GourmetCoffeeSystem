@@ -3,6 +3,8 @@ package Product;
 import java.util.*;
 
 public class CatalogItem {
+	private static Vector<CatalogItem> items = new Vector<CatalogItem>(); // 初始化静态成员变量
+
 
 	/* Code of the item. */
 	public static String  code;
@@ -35,7 +37,6 @@ public class CatalogItem {
 	 * @return  the code of this item.
 	 */
 	public String getCode() {
-
 		return  code;
 	}
 
@@ -89,21 +90,18 @@ public class CatalogItem {
 	}
 
 	public int getQuantity() {
-		// TODO Auto-generated method stub
 		return quantity;
 	}
 
 	public String getDescription() {
-		// TODO Auto-generated method stub
 		return description;
 	}
 
 	public double getPrice() {
-		// TODO Auto-generated method stub
 		return price;
 	}
 
-	public static CatalogItem getItem(String code) {
+	public CatalogItem getItem(String code) {
 
 		for (Iterator<CatalogItem> i = getItemsIterator(); i.hasNext();) {
 
@@ -118,8 +116,12 @@ public class CatalogItem {
 		return null;
 	}
 
-	public static Iterator<CatalogItem> getItemsIterator() {
+	private Iterator<CatalogItem> getItemsIterator() {
 
 		return items.iterator();
 	}
+
+	
+
+	
 }
