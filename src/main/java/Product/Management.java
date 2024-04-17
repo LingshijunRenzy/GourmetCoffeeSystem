@@ -18,15 +18,15 @@ import java.util.Map.Entry;
  */
 
 public class Management {
-
-    private static Map<OrderedItems, Integer> totalSalesPerProduct;  
-  
-	private static BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
+	
+    private static Map<OrderedItems, Double> totalSalesPerProduct;  
+    private static BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
 	private static PrintWriter stdOut = new PrintWriter(System.out, true);
 	private static PrintWriter stdErr = new PrintWriter(System.err, true);
-
-	private Catalog catalog;
+	Scanner scanner = new Scanner(System.in);
+	private static Catalog catalog;
 	private CustomerDatabase customerDB;
+	private OrderedItems[] orderedItem;
 	/**
 	 * The main function loads the information of the library catalog and customer
 	 * database and starts the managementlication.
@@ -34,10 +34,12 @@ public class Management {
 	 * @param args String arguments. Not used.
 	 * @throws IOException if there are errors in the input.
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		totalSalesPerProduct = new HashMap<>();  
 		
-		load();
+		@SuppressWarnings("unused")
+		CustomerDatabase customerDB = load(catalog);
+
 		Management management = new Management();
 
 		management.run();
@@ -78,44 +80,44 @@ public class Management {
 
 		Customer customer = new Customer("ID001", "James Addy", 0);
 		customerDB.addCustomer(customer);
-		customer.getOrderedItems().addItem(catalog.getItem("B003"));
-		customer.getOrderedItems().addItem(catalog.getItem("R001"));
-		customer.getOrderedItems().addItem(catalog.getItem("B012"));
+		customer.getOrderedItems().addItem((OrderedItems) catalog.getItem("B003"));
+		customer.getOrderedItems().addItem((OrderedItems) catalog.getItem("R001"));
+		customer.getOrderedItems().addItem((OrderedItems) catalog.getItem("B012"));
 
 		customer = new Customer("ID002", "John Doust", 0);
 		customerDB.addCustomer(customer);
 
 		customer = new Customer("ID003", "Constance Foster", 0);
 		customerDB.addCustomer(customer);
-		customer.getOrderedItems().addItem(catalog.getItem("B006"));
+		customer.getOrderedItems().addItem((OrderedItems)catalog.getItem("B006"));
 
 		customer = new Customer("ID004", "Harold Gurske", 0);
 		customerDB.addCustomer(customer);
-		customer.getOrderedItems().addItem(catalog.getItem("B002"));
+		customer.getOrderedItems().addItem((OrderedItems)catalog.getItem("B002"));
 
 		customer = new Customer("ID005", "Mary A. Rogers", 0);
 		customerDB.addCustomer(customer);
 
 		customer = new Customer("ID006", "Laura Novelle", 0);
 		customerDB.addCustomer(customer);
-		customer.getOrderedItems().addItem(catalog.getItem("B007"));
-		customer.getOrderedItems().addItem(catalog.getItem("B009"));
+		customer.getOrderedItems().addItem((OrderedItems)catalog.getItem("B007"));
+		customer.getOrderedItems().addItem((OrderedItems)catalog.getItem("B009"));
 
 		customer = new Customer("ID007", "David M. Prescott", 0);
 		customerDB.addCustomer(customer);
-		customer.getOrderedItems().addItem(catalog.getItem("B011"));
+		customer.getOrderedItems().addItem((OrderedItems)catalog.getItem("B011"));
 
 		customer = new Customer("ID008", "Francis Matthews", 0);
 		customerDB.addCustomer(customer);
-		customer.getOrderedItems().addItem(catalog.getItem("R003"));
-		customer.getOrderedItems().addItem(catalog.getItem("B005"));
+		customer.getOrderedItems().addItem((OrderedItems)catalog.getItem("R003"));
+		customer.getOrderedItems().addItem((OrderedItems)catalog.getItem("B005"));
 
 		customer = new Customer("ID009", "Thomas Ferris", 0);
 		customerDB.addCustomer(customer);
 
 		customer = new Customer("ID010", "John Johnson", 0);
 		customerDB.addCustomer(customer);
-		customer.getOrderedItems().addItem(catalog.getItem("B004"));
+		customer.getOrderedItems().addItem((OrderedItems)catalog.getItem("B004"));
 
 		return customerDB;
 	}
@@ -193,7 +195,13 @@ public class Management {
 	}
 
 	private void displayOrderCountForProduct(String code) {
-		CatalogItem product = readProduct();
+		CatalogItem product = null;
+		try {
+			product = readProduct();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		if (product != null) {
 
@@ -224,81 +232,26 @@ public class Management {
 	}
 
 	private void displayTotalSalesPerProduct() throws IOException {
-		// 假设totalSalesPerProduct是一个存储每个产品总销售额的Map  
-	    Map<OrderedItems, Integer> totalSalesPerProduct = new HashMap<>();  
-	  
-	    // 遍历Vector中的每个OrderedItems对象  
-	    for (OrderedItems product : OrderedItems) {  
-	        // 假设每个OrderedItems对象都有一个getQuantity()方法来获取数量  
-	        int quantity = OrderedItems.getQuantity(); // 需要根据实际情况来获取数量  
-	        double pricePerUnit = product.getPrice(); // 假设OrderedItems类有一个getPrice方法  
-	  
-	        // 计算当前产品的总销售额，并更新到map中  
-	        int totalSalesForThisProduct = totalSalesPerProduct.getOrDefault(product, 0);  
-	        totalSalesPerProduct.put(product, totalSalesForThisProduct + (int)(quantity * pricePerUnit));  
-	    }  
-	  
-	    // 显示每个产品的总销售额  
-	    // 注意：这个循环应该在遍历Vector外部执行，以便在收集完所有产品的销售额后一次性显示  
-	    for (Entry<OrderedItems, Integer> entry : totalSalesPerProduct.entrySet()) {  
-	        // stdOut可能是一个PrintStream对象，用于输出到标准输出流（通常是控制台）  
-	        stdOut.println("Product: " + entry.getKey() + ", Total Sales: $" + entry.getValue());  
-	    }   
+		// 遍历 orderedItems 中的每个 OrderedItem 对象  
+        for (OrderedItems orderedItem : orderedItem) {  
+            // 获取当前产品的ID  
+            OrderedItems productId = (OrderedItems) orderedItem.getCode();  
+            int quantity = orderedItem.getQuantity(); // 获取数量  
+            double pricePerUnit = orderedItem.getPrice(); // 获取单价  
+  
+            // 计算当前产品的总销售额，并更新到 map 中  
+            double totalSalesForThisProduct = totalSalesPerProduct.getOrDefault(productId, 0.0);  
+            double newTotalSales = totalSalesForThisProduct + (quantity * pricePerUnit);  
+            totalSalesPerProduct.put(productId, newTotalSales);  
+        }  
+  
+        // 显示每个产品的总销售额  
+        for (Entry<OrderedItems, Double> entry : totalSalesPerProduct.entrySet()) {  
+            stdOut.println("Product ID: " + entry.getKey() + ", Total Sales: $" + entry.getValue());  
+        }   
 	}
 
-	Scanner scanner = new Scanner(System.in);
-//		boolean keepRunning = true;
-//
-//		while (keepRunning) {
-//			clearConsole(); // 清除控制台屏幕
-//			printMenu(); // 打印菜单选项
-//			System.out.print("choice >");
-//			String input = scanner.nextLine(); // 使用nextLine来读取整行输入
-//
-//			switch (input) {
-//			case "1":
-//				commander.displayCatalog(); // 显示产品目录
-//				break;
-//			case "2":
-//				commander.displayProductInfo(ProductCatalog.code);
-//				// 显示特定产品信息，需要传递产品ID或代码给commander
-//				break;
-//			case "3":
-//				commander.displayCurrentOrder(); // 显示当前订单
-//				break;
-//			case "4":
-//
-////                    System.out.println("请输入要添加的产品ID:");  
-//				commander.addProductToOrder(scanner.next());// 添加产品到当前订单，需要传递产品ID和数量给commander
-//				break;
-//			case "5":
-//				commander.removeProductFromOrder(scanner.next());// 从当前订单中移除产品，需要传递产品ID给commander
-//				break;
-//			case "6":
-//				commander.registerSale(); // 注册当前订单的销售
-//				break;
-//			case "7":
-//				commander.displaySales(); // 显示所有销售记录
-//				break;
-//			case "8":
-//				commander.displayOrderCountForProduct(scanner.next());// 显示具有特定产品的订单数量,需要传递产品ID给commander
-//				break;
-//			case "9":
-//				commander.displayTotalSalesPerProduct();// 显示每个产品的总销售数量，需要commander处理
-//				break;
-//			case "0":
-//				keepRunning = false; // 设置标志以退出循环
-//				System.out.println("程序已退出。");
-//				break;
-//			default:
-//				System.out.println("无效输入，请重新输入。");
-//			}
-//		}
-//
-//		// 关闭 Scanner
-//		scanner.close();
-	}
-
+	
 	/* Validates the user's choice. */
 
 	private int getChoice() throws IOException {
@@ -404,8 +357,6 @@ public class Management {
 
 			stdOut.println("  Name: " + customer.getName());
 
-			OrderedItems orderedItems = customer.getOrderedItems();
-
 			if (OrderedItems.getNumberOfItems() == 0) {
 				stdOut.println("  No items ordered");
 			} else {
@@ -421,60 +372,6 @@ public class Management {
 			stdErr.println("There is no customer with that id");
 		}
 	}
-
-	/*
-	 * Registers the loan of a item to a customer.
-	 */
-//	@SuppressWarnings("unused")
-//	private void checkOut() throws IOException {
-//
-//		CatalogItem item = readCatalogItem();
-//
-//		if (item == null) {
-//			stdErr.println("There is no catalog item with that code");
-//		} else if (item.isAvailable()) {
-//
-//			Customer customer = readCustomer();
-//
-//			if (customer == null) {
-//				stdErr.println("There is no customer with that id");
-//			} else {
-//				customer.getOrderedItems().addItem(item);
-//				stdOut.println("The item " + item.getCode() + " has been check out by " + customer.getId());
-//			}
-//		} else {
-//			stdErr.println("The item " + item.getCode() + " is not available");
-//		}
-//	}
-
-	/*
-	 * Registers the return of a item.
-	 */
-//	@SuppressWarnings("unused")
-//	private void checkIn() throws IOException {
-//
-//		CatalogItem item = readCatalogItem();
-//
-//		if (item == null) {
-//			stdErr.println("There is no catalog item with that code");
-//		} else if (item.isAvailable()) {
-//			stdErr.println("The item " + item.getCode() + " is not ordered");
-//		} else {
-//
-//			Customer customer = readCustomer();
-//
-//			if (customer == null) {
-//				stdErr.println("There is no customer with that id");
-//			} else {
-//				if (customer.getOrderedItems().removeItem(item)) {
-//					;
-//					stdOut.println("The item " + item.getCode() + " has been returned");
-//				} else {
-//					stdErr.println("The item " + item.getCode() + " is not ordered by " + customer.getId());
-//				}
-//			}
-//		}
-//	}
 
 	/*
 	 * Obtains a CatalogItem object.
@@ -498,72 +395,3 @@ public class Management {
 		return this.customerDB.getCustomer((String)stdIn.readLine());
 	}
 
-//	public static void main(String[] args) {
-//		Scanner scanner = new Scanner(System.in);
-//		boolean keepRunning = true;
-//
-//		while (keepRunning) {
-//			clearConsole(); // 清除控制台屏幕
-//			printMenu(); // 打印菜单选项
-//			System.out.print("choice >");
-//			String input = scanner.nextLine(); // 使用nextLine来读取整行输入
-//
-//			switch (input) {
-//			case "1":
-//				commander.displayCatalog(); // 显示产品目录
-//				break;
-//			case "2":
-//				commander.displayProductInfo(ProductCatalog.code);
-//				// 显示特定产品信息，需要传递产品ID或代码给commander
-//				break;
-//			case "3":
-//				commander.displayCurrentOrder(); // 显示当前订单
-//				break;
-//			case "4":
-//
-////                    System.out.println("请输入要添加的产品ID:");  
-//				commander.addProductToOrder(scanner.next());// 添加产品到当前订单，需要传递产品ID和数量给commander
-//				break;
-//			case "5":
-//				commander.removeProductFromOrder(scanner.next());// 从当前订单中移除产品，需要传递产品ID给commander
-//				break;
-//			case "6":
-//				commander.registerSale(); // 注册当前订单的销售
-//				break;
-//			case "7":
-//				commander.displaySales(); // 显示所有销售记录
-//				break;
-//			case "8":
-//				commander.displayOrderCountForProduct(scanner.next());// 显示具有特定产品的订单数量,需要传递产品ID给commander
-//				break;
-//			case "9":
-//				commander.displayTotalSalesPerProduct();// 显示每个产品的总销售数量，需要commander处理
-//				break;
-//			case "0":
-//				keepRunning = false; // 设置标志以退出循环
-//				System.out.println("程序已退出。");
-//				break;
-//			default:
-//				System.out.println("无效输入，请重新输入。");
-//			}
-//		}
-//
-//		// 关闭 Scanner
-//		scanner.close();
-//	}
-//
-//	// 清除控制台屏幕的方法（平台相关）
-//	private static void clearConsole() {
-//		System.out.print("\033[H\033[J");
-//		System.out.flush();
-//	}
-//
-//	// 打印菜单选项的方法
-//	private static void printMenu() {
-//		System.out.println("[0] Quit\r\n" + "[1] Display catalog\r\n" + "[2] Display product \r\n"
-//				+ "[3] Display current order\r\n" + "[4] Add product to current order\r\n"
-//				+ "[5] Remove product from current order \r\n" + "[6] Register sale of current order\r\n"
-//				+ "[7] Display sales\r\n" + "[8] Display number of orders with a specific product\r\n"
-//				+ "[9] Display the total quantity sold for each product\r\n");
-//	}
-}
