@@ -13,7 +13,7 @@ import java.util.Vector;
 public class OrderedItems extends CatalogItem {
 
 	/* Catalog items assigned to a borrower. */
-	private static Vector<CatalogItem> items = new Vector<CatalogItem>(); // 初始化静态成员变量
+	private static Vector<OrderedItems> items = new Vector<OrderedItems>(); // 初始化静态成员变量
 
 	/**
 	 * Sets the collection of {@link CatalogItems} to empty.
@@ -57,7 +57,7 @@ public class OrderedItems extends CatalogItem {
 	 *
 	 * return an {@link Iterator}
 	 */
-	public static Iterator<OrderedItems> getItemsIterator() {
+	public Iterator<OrderedItems> getItemsIterator() {
 
 		return items.iterator();
 	}
@@ -69,19 +69,15 @@ public class OrderedItems extends CatalogItem {
 	 * @return The {@link CatalogItem} object with the specified code. Returns
 	 *         <code>null</code> if the object with the code is not found.
 	 */
-	public static OrderedItems getItem(String code) {
-
-		for (Iterator<OrderedItems> i = getItemsIterator(); i.hasNext();) {
-
-			OrderedItems orderedItem = i.next();
-
-			if (i.next().getCode().equals(code)) {
-
-				return orderedItem;
-			}
-		}
-
-		return null;
+	public OrderedItems getItem(String code) {  
+	    Iterator<OrderedItems> i = getItemsIterator(); // 假设这个方法返回正确的Iterator类型  
+	    while (i.hasNext()) { // 使用while循环代替for循环  
+	        OrderedItems orderedItem = i.next(); // 只调用一次i.next()  
+	        if (orderedItem.getCode().equals(code)) { // 使用之前获取的orderedItem进行比较  
+	            return orderedItem;  
+	        }  
+	    }  
+	    return null;  
 	}
 
 	public String getCode() {
@@ -110,3 +106,4 @@ public class OrderedItems extends CatalogItem {
 	public static int getNumberOfItems() {
 		return items.size();
 	}
+}
