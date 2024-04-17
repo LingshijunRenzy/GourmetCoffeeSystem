@@ -58,7 +58,7 @@ public class Catalog  {
 
 		for (Iterator<CatalogItem> i = getItemsIterator(); i.hasNext();) {
 
-			CatalogItem catalogItem = (CatalogItem) i.next();
+			CatalogItem catalogItem = i.next();
 
 			if (catalogItem.getCode().equals(code)) {
 
