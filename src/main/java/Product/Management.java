@@ -18,33 +18,17 @@ import java.util.Map.Entry;
  */
 
 public class Management {
-	
-    private static Map<OrderedItems, Double> totalSalesPerProduct;  
-    private static BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
+
+	private static Map<OrderedItems, Double> totalSalesPerProduct;
+	private static BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
 	private static PrintWriter stdOut = new PrintWriter(System.out, true);
 	private static PrintWriter stdErr = new PrintWriter(System.err, true);
 	Scanner scanner = new Scanner(System.in);
 	private static Catalog catalog;
 	private CustomerDatabase customerDB;
 	private OrderedItems[] orderedItem;
-	/**
-	 * The main function loads the information of the library catalog and customer
-	 * database and starts the managementlication.
-	 *
-	 * @param args String arguments. Not used.
-	 * @throws IOException if there are errors in the input.
-	 */
-	public static void main(String[] args) throws IOException {
-		totalSalesPerProduct = new HashMap<>();  
-		
-		@SuppressWarnings("unused")
-		CustomerDatabase customerDB = load(catalog);
 
-		Management management = new Management();
-
-		management.run();
-
-	}
+	
 
 	/*
 	 * Loads the information of a Catalog object.
@@ -89,35 +73,35 @@ public class Management {
 
 		customer = new Customer("ID003", "Constance Foster", 0);
 		customerDB.addCustomer(customer);
-		customer.getOrderedItems().addItem((OrderedItems)catalog.getItem("B006"));
+		customer.getOrderedItems().addItem((OrderedItems) catalog.getItem("B006"));
 
 		customer = new Customer("ID004", "Harold Gurske", 0);
 		customerDB.addCustomer(customer);
-		customer.getOrderedItems().addItem((OrderedItems)catalog.getItem("B002"));
+		customer.getOrderedItems().addItem((OrderedItems) catalog.getItem("B002"));
 
 		customer = new Customer("ID005", "Mary A. Rogers", 0);
 		customerDB.addCustomer(customer);
 
 		customer = new Customer("ID006", "Laura Novelle", 0);
 		customerDB.addCustomer(customer);
-		customer.getOrderedItems().addItem((OrderedItems)catalog.getItem("B007"));
-		customer.getOrderedItems().addItem((OrderedItems)catalog.getItem("B009"));
+		customer.getOrderedItems().addItem((OrderedItems) catalog.getItem("B007"));
+		customer.getOrderedItems().addItem((OrderedItems) catalog.getItem("B009"));
 
 		customer = new Customer("ID007", "David M. Prescott", 0);
 		customerDB.addCustomer(customer);
-		customer.getOrderedItems().addItem((OrderedItems)catalog.getItem("B011"));
+		customer.getOrderedItems().addItem((OrderedItems) catalog.getItem("B011"));
 
 		customer = new Customer("ID008", "Francis Matthews", 0);
 		customerDB.addCustomer(customer);
-		customer.getOrderedItems().addItem((OrderedItems)catalog.getItem("R003"));
-		customer.getOrderedItems().addItem((OrderedItems)catalog.getItem("B005"));
+		customer.getOrderedItems().addItem((OrderedItems) catalog.getItem("R003"));
+		customer.getOrderedItems().addItem((OrderedItems) catalog.getItem("B005"));
 
 		customer = new Customer("ID009", "Thomas Ferris", 0);
 		customerDB.addCustomer(customer);
 
 		customer = new Customer("ID010", "John Johnson", 0);
 		customerDB.addCustomer(customer);
-		customer.getOrderedItems().addItem((OrderedItems)catalog.getItem("B004"));
+		customer.getOrderedItems().addItem((OrderedItems) catalog.getItem("B004"));
 
 		return customerDB;
 	}
@@ -207,12 +191,12 @@ public class Management {
 
 			stdOut.println("  Name: " + product.getDescription());
 
-			
 			if (OrderedItems.getNumberOfItems() == 0) {
 				stdOut.println("  No items ordered");
 			} else {
 				stdOut.println("  Items Ordered:");
-				for (Iterator<OrderedItems> i = (Iterator<OrderedItems>) OrderedItems.getItemsIterator(); i.hasNext();) {
+				for (Iterator<OrderedItems> i = (Iterator<OrderedItems>) OrderedItems.getItemsIterator(); i
+						.hasNext();) {
 
 					OrderedItems item = i.next();
 
@@ -223,7 +207,7 @@ public class Management {
 			stdErr.println("There is no borrower with that id");
 		}
 	}
- 
+
 	private CatalogItem readProduct() throws IOException {
 		stdOut.print("Product id> ");
 		stdOut.flush();
@@ -232,26 +216,25 @@ public class Management {
 	}
 
 	private void displayTotalSalesPerProduct() throws IOException {
-		// 遍历 orderedItems 中的每个 OrderedItem 对象  
-        for (OrderedItems orderedItem : orderedItem) {  
-            // 获取当前产品的ID  
-            OrderedItems productId = (OrderedItems) orderedItem.getCode();  
-            int quantity = orderedItem.getQuantity(); // 获取数量  
-            double pricePerUnit = orderedItem.getPrice(); // 获取单价  
-  
-            // 计算当前产品的总销售额，并更新到 map 中  
-            double totalSalesForThisProduct = totalSalesPerProduct.getOrDefault(productId, 0.0);  
-            double newTotalSales = totalSalesForThisProduct + (quantity * pricePerUnit);  
-            totalSalesPerProduct.put(productId, newTotalSales);  
-        }  
-  
-        // 显示每个产品的总销售额  
-        for (Entry<OrderedItems, Double> entry : totalSalesPerProduct.entrySet()) {  
-            stdOut.println("Product ID: " + entry.getKey() + ", Total Sales: $" + entry.getValue());  
-        }   
+		// 遍历 orderedItems 中的每个 OrderedItem 对象
+		for (OrderedItems orderedItem : orderedItem) {
+			// 获取当前产品的ID
+			OrderedItems productId = (OrderedItems) orderedItem.getCode();
+			int quantity = orderedItem.getQuantity(); // 获取数量
+			double pricePerUnit = orderedItem.getPrice(); // 获取单价
+
+			// 计算当前产品的总销售额，并更新到 map 中
+			double totalSalesForThisProduct = totalSalesPerProduct.getOrDefault(productId, 0.0);
+			double newTotalSales = totalSalesForThisProduct + (quantity * pricePerUnit);
+			totalSalesPerProduct.put(productId, newTotalSales);
+		}
+
+		// 显示每个产品的总销售额
+		for (Entry<OrderedItems, Double> entry : totalSalesPerProduct.entrySet()) {
+			stdOut.println("Product ID: " + entry.getKey() + ", Total Sales: $" + entry.getValue());
+		}
 	}
 
-	
 	/* Validates the user's choice. */
 
 	private int getChoice() throws IOException {
@@ -299,7 +282,8 @@ public class Management {
 
 				CatalogItem item = i.next();
 
-				stdOut.println(item.getCode() + " " + item.getDescription() + " " + (item.isAvailable() ? "(A)" : "(NA)"));
+				stdOut.println(
+						item.getCode() + " " + item.getDescription() + " " + (item.isAvailable() ? "(A)" : "(NA)"));
 			}
 		}
 	}
@@ -392,6 +376,24 @@ public class Management {
 		stdOut.print("Customer id> ");
 		stdOut.flush();
 
-		return this.customerDB.getCustomer((String)stdIn.readLine());
+		return this.customerDB.getCustomer((String) stdIn.readLine());
 	}
+	/**
+	 * The main function loads the information of the library catalog and customer
+	 * database and starts the managementlication.
+	 *
+	 * @param args String arguments. Not used.
+	 * @throws IOException if there are errors in the input.
+	 */
+	public static void main(String[] args) throws IOException {
+		totalSalesPerProduct = new HashMap<>();
 
+		@SuppressWarnings("unused")
+		CustomerDatabase customerDB = load(catalog);
+
+		Management management = new Management();
+
+		management.run();
+
+	}
+}
