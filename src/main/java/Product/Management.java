@@ -387,6 +387,8 @@ public class Management {
 	 */
 	public static void main(String[] args) throws IOException {
 		totalSalesPerProduct = new HashMap<>();
+		Catalog catalog = load();
+		
 
 		@SuppressWarnings("unused")
 		CustomerDatabase customerDB = load(catalog);
