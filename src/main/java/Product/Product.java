@@ -92,15 +92,13 @@ public class Product {
 
 
     public void setQuantity(int quantity) {
-        // TODO Auto-generated method stub
         // 可以在这里添加一些业务逻辑，比如检查数量是否合法
         this.quantity = quantity;
     }
 
 
 
-    public int getQuantity() {
-        // TODO Auto-generated method stub
+    public int getQuantity() 
         return this.quantity;
     }
 }
