@@ -8,7 +8,7 @@ public class Customer {
 
 	/* Items ordered by the customer.*/
 	
-	private OrderedItems OrderedItems;
+	private OrderedItems orderedItem;
 
 	private int points;  
 	  
@@ -18,15 +18,16 @@ public class Customer {
 	 * The collection of the borrowed items is initially empty.
 	 * </p>
 	 *
-	 * @param initialId  the id of the borrower.
-	 * @param initialName  the name of the borrower.
+	 * @param initialId  the id of the customer.
+	 * @param initialName  the name of the customer.
+	 * @param initialpoints the points of the customer.
 	 */
-	public Customer(String initialId, String initialName,int initialpoints) {
+	public Customer(String initialId, String initialName,int initialpoints,OrderedItems OrderedItems) {
 
 		id = initialId;
 		name = initialName;
 		points = initialpoints; 
-		OrderedItems = new OrderedItems();
+		orderedItem = OrderedItems;
 		
 	}
 
@@ -47,7 +48,7 @@ public class Customer {
 	 */
 	public OrderedItems getOrderedItems() {
 
-		return OrderedItems;
+		return orderedItem;
 	}
 
 	/**
@@ -92,10 +93,11 @@ public class Customer {
     public String toString() {  
         return "Customer{" +  
                 "name='" + name +  
-                ",ordereditems:" + OrderedItems + 
+                ",ordereditems:" + orderedItem + 
                 ", points=" + points +  
                 '}';  
     }
+
 
 	
     
