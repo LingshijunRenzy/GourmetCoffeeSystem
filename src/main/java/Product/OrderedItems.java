@@ -57,7 +57,7 @@ public class OrderedItems extends CatalogItem {
 	 *
 	 * return an {@link Iterator}
 	 */
-	public Iterator<OrderedItems> getItemsIterator() {
+	public static Iterator<OrderedItems> getItemsIterator() {
 
 		return items.iterator();
 	}
