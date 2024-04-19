@@ -14,7 +14,9 @@ public class Catalog  {
 	public String TypeofRoast;
 
 	public String flavor;
-	/* Collection of <code>Product</code> objects.*/
+	/**
+	* Collection of <code>Product</code> objects.
+	*/
 	private Vector<CatalogItem> items;
 
 	/**
@@ -28,7 +30,7 @@ public class Catalog  {
 	/**
 	 * Adds a {@link CatalogItem} object to this catalog.
 	 *
-	 * @param product  the {@link CatalogItem} object.
+	 * @param catalogItem  the {@link CatalogItem} object.
 	 */
 	public void addItem(CatalogItem catalogItem) {
 
@@ -37,7 +39,7 @@ public class Catalog  {
 
 	/**
 	 * Returns an iterator over the items in this catalog.
-	 *
+	 * <p>
 	 * return  an {@link Iterator}
 	 */
 	public Iterator<CatalogItem> getItemsIterator() {
@@ -85,7 +87,7 @@ public class Catalog  {
 	 * Returns the {@link Product} object with the specified
 	 * <code>code</code>.
 	 *
-	 * @param code  the code of an product.
+	 * @param code  the code of a product.
 	 * @return  The {@link Product} object with the specified
 	 *          code. Returns <code>null</code> if the object with
 	 *          the code is not found.

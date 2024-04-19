@@ -1,13 +1,13 @@
 package Product;
 
 public class Product {
-    public static String code;
+    private static String code;
 
-    public String description;
+    private String description;
 
-    public double price;
+    private double price;
 
-    public int quantity;
+    private int quantity;
 
     // 其他特定于咖啡或冲泡机的属性可以在子类中定义
 
@@ -21,8 +21,6 @@ public class Product {
 
     }
 
-
-
     // Getter 和 Setter 方法
 
     public String getCode() {
@@ -31,15 +29,11 @@ public class Product {
 
     }
 
-
-
     public void setCode(String code) {
 
         Product.code = code;
 
     }
-
-
 
     public String getDescription() {
 
@@ -53,15 +47,11 @@ public class Product {
 
     }
 
-
-
     public double getPrice() {
 
         return price;
 
     }
-
-
 
     public void setPrice(double price) {
 
@@ -89,16 +79,12 @@ public class Product {
 
     }
 
-
-
     public void setQuantity(int quantity) {
         // 可以在这里添加一些业务逻辑，比如检查数量是否合法
         this.quantity = quantity;
     }
 
-
-
-    public int getQuantity() 
+    public int getQuantity() {
         return this.quantity;
     }
 }

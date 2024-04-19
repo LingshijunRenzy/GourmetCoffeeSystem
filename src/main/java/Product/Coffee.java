@@ -2,17 +2,17 @@ package Product;
 
 public class Coffee extends Product {
 
-    public String acidity;
+    private String acidity;
 
-    public String aroma;
+    private String aroma;
 
-    public String body;
+    private String body;
 
-    public String OriginCountry;
+    private String OriginCountry;
 
-    public String TypeofRoast;
+    private String TypeofRoast;
 
-    public String flavor;
+    private String flavor;
 
     // 其他特定于咖啡或冲泡机的属性可以在子类中定义
 
@@ -38,39 +38,28 @@ public class Coffee extends Product {
     // Getter 和 Setter 方法
 
     public String getCode() {
-
-        return code;
+        return super.getCode();
 
     }
 
     public void setCode(String code) {
-
-        this.code = code;
-
+        super.setCode(code);
     }
 
     public String getDescription() {
-
-        return description;
-
+        return super.getDescription();
     }
 
     public void setDescription(String description) {
-
-        this.description = description;
-
+        super.setDescription(description);
     }
 
     public double getPrice() {
-
-        return price;
-
+        return super.getPrice();
     }
 
     public void setPrice(double price) {
-
-        this.price = price;
-
+        super.setPrice(price);
     }
 
     public void getOriginCountry(String OriginCountry) {
@@ -111,11 +100,11 @@ public class Coffee extends Product {
 
         return "Product{" +
 
-                "code='" + code + '\'' +
+                "code='" + super.getCode() + '\'' +
 
-                ", description='" + description + '\'' +
+                ", description='" + super.getDescription() + '\'' +
 
-                ", price=" + price +
+                ", price=" + super.getPrice() +
 
                 ", Country of origin=" + OriginCountry + ", acidity:" + acidity + "' aroma:" + aroma + ",body:" + body
                 + ",OriginCountry:" + OriginCountry + ",Type of Roast:" + TypeofRoast + ",flavor:" + flavor + '}';
