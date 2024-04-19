@@ -37,20 +37,20 @@ public class Management {
 
 		Catalog catalog = new Catalog();
 
-		catalog.addItem(new CatalogItem("B001", "Effective Java Programming", 2001, 252));
-		catalog.addItem(new CatalogItem("B002", "Effective Java Programming", 2001, 252));
-		catalog.addItem(new CatalogItem("B003", "Effective Java Programming", 2001, 252));
-		catalog.addItem(new CatalogItem("B004", "Effective Java Programming", 2001, 252));
-		catalog.addItem(new CatalogItem("B005", "Effective Java Programming", 2001, 252));
-		catalog.addItem(new CatalogItem("B006", "Effective Java Programming", 2001, 252));
-		catalog.addItem(new CatalogItem("B007", "Effective Java Programming", 2001, 252));
-		catalog.addItem(new CatalogItem("B008", "Effective Java Programming", 2001, 252));
-		catalog.addItem(new CatalogItem("B009", "Effective Java Programming", 2001, 252));
-		catalog.addItem(new CatalogItem("B010", "Effective Java Programming", 2001, 252));
-		catalog.addItem(new CatalogItem("B011", "Effective Java Programming", 2001, 252));
-		catalog.addItem(new CatalogItem("B012", "Effective Java Programming", 2001, 252));
-		catalog.addItem(new CatalogItem("B013", "Effective Java Programming", 2001, 252));
-		catalog.addItem(new CatalogItem("B014", "Effective Java Programming", 2001, 252));
+		catalog.addItem(new CatalogItem("B001", "酱香拿铁", 30, 252));
+		catalog.addItem(new CatalogItem("B002", "美式咖啡", 10, 252));
+		catalog.addItem(new CatalogItem("B003", "茉莉拿铁", 18, 252));
+		catalog.addItem(new CatalogItem("B004", "生椰拿铁", 18, 252));
+		catalog.addItem(new CatalogItem("B005", "椰皇拿铁", 20, 252));
+		catalog.addItem(new CatalogItem("B006", "丝绒拿铁", 20, 252));
+		catalog.addItem(new CatalogItem("B007", "黑糖拿铁", 21, 252));
+		catalog.addItem(new CatalogItem("B008", "香草拿铁", 20, 252));
+		catalog.addItem(new CatalogItem("B009", "生酪拿铁", 23, 252));
+		catalog.addItem(new CatalogItem("B010", "厚乳拿铁", 21, 252));
+		catalog.addItem(new CatalogItem("B011", "巧克力拿铁", 21, 252));
+		catalog.addItem(new CatalogItem("B012", "巧克力瑞纳冰", 22, 252));
+		catalog.addItem(new CatalogItem("B013", "抹茶瑞纳冰", 22, 252));
+		catalog.addItem(new CatalogItem("B014", "焦糖玛奇朵", 20, 252));
 
 		return catalog;
 	}
@@ -65,7 +65,7 @@ public class Management {
 		Customer customer = new Customer("ID001", "James Addy", 0);
 		customerDB.addCustomer(customer);
 		customer.getOrderedItems().addItem((OrderedItems) catalog.getItem("B003"));
-		customer.getOrderedItems().addItem((OrderedItems) catalog.getItem("R001"));
+		customer.getOrderedItems().addItem((OrderedItems) catalog.getItem("B001"));
 		customer.getOrderedItems().addItem((OrderedItems) catalog.getItem("B012"));
 
 		customer = new Customer("ID002", "John Doust", 0);
@@ -93,7 +93,7 @@ public class Management {
 
 		customer = new Customer("ID008", "Francis Matthews", 0);
 		customerDB.addCustomer(customer);
-		customer.getOrderedItems().addItem((OrderedItems) catalog.getItem("R003"));
+		customer.getOrderedItems().addItem((OrderedItems) catalog.getItem("B003"));
 		customer.getOrderedItems().addItem((OrderedItems) catalog.getItem("B005"));
 
 		customer = new Customer("ID009", "Thomas Ferris", 0);
