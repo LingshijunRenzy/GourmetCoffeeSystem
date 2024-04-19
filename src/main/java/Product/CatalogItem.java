@@ -3,33 +3,46 @@ package Product;
 import java.util.*;
 
 public class CatalogItem {
-	private static Vector<CatalogItem> items = new Vector<CatalogItem>(); // 初始化静态成员变量
 
+	private String  code;
 
-	/* Code of the item. */
-	public static String  code;
+	private String description;
 
-    public static String description;  
+	private double price;
 
-    public static double price;
+	private int quantity;
 
-    public static int quantity;  
-    
-    public boolean available;
+	private boolean available;
 
 	
-
+	/**
+	 * CatalogItem的构造函数
+	 */
     public CatalogItem(String code, String description, double price, int quantity) {  
 
-        Product.code = code;  
+        this.code = code;
 
         this.description = description;  
 
         this.price = price;  
         
-        Product.quantity = quantity;
+        this.quantity = quantity;
 
-    }  
+    }
+
+	/**
+	 * Catalog的构造函数（通过Product)
+	 */
+	public CatalogItem(Product product){
+		this.code = product.getCode();
+
+		this.description = product.getDescription();
+
+		this.price = product.getPrice();
+
+		this.quantity = product.getQuantity();
+	}
+
 
 	/**
 	 * Returns the code of this item.
@@ -39,12 +52,10 @@ public class CatalogItem {
 	public String getCode() {
 		return  code;
 	}
+	public void setCode(String code) { this.code = code; }
 
-	
-	
+
 	/**
-	 * Returns <code>true</code> if the item is available.
-	 *
 	 * @return  <code>true</code> if the item is available;
 	 *          <code>false</code> otherwise.
 	 */
@@ -52,7 +63,6 @@ public class CatalogItem {
 
 		return available;
 	}
-	
 	/**
 	 * Sets the value of instance variable <code>available</code>.
 	 *
@@ -92,36 +102,36 @@ public class CatalogItem {
 	public int getQuantity() {
 		return quantity;
 	}
+	public void setQuantity(int quantity) { this.quantity = quantity; }
 
 	public String getDescription() {
 		return description;
 	}
+	public void setDescription(String description) { this.description = description; }
 
 	public double getPrice() {
 		return price;
 	}
+	public void setPrice(double price) { this.price = price; }
 
-	public CatalogItem getItem(String code) {
+//	public CatalogItem getItem(String code) {
+//
+//		for (Iterator<CatalogItem> i = getItemsIterator(); i.hasNext();) {
+//
+//			CatalogItem catalogItem = (CatalogItem) i.next();
+//
+//			if (catalogItem.getCode().equals(code)) {
+//
+//				return catalogItem;
+//			}
+//		}
+//
+//		return null;
+//	}
 
-		for (Iterator<CatalogItem> i = getItemsIterator(); i.hasNext();) {
+//	private Iterator<CatalogItem> getItemsIterator() {
+//
+//		return items.iterator();
+//	}
 
-			CatalogItem catalogItem = (CatalogItem) i.next();
-
-			if (catalogItem.getCode().equals(code)) {
-
-				return catalogItem;
-			}
-		}
-
-		return null;
-	}
-
-	private Iterator<CatalogItem> getItemsIterator() {
-
-		return items.iterator();
-	}
-
-	
-
-	
 }

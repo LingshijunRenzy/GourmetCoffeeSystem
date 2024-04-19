@@ -3,17 +3,6 @@ package Product;
 import java.util.*;
 
 public class Catalog  {
-	public String acidity;
-
-	public String aroma;
-
-	public String body;
-
-	public String OriginCountry;
-
-	public String TypeofRoast;
-
-	public String flavor;
 	/* Collection of <code>Product</code> objects.*/
 	private Vector<CatalogItem> items;
 
@@ -28,7 +17,7 @@ public class Catalog  {
 	/**
 	 * Adds a {@link CatalogItem} object to this catalog.
 	 *
-	 * @param product  the {@link CatalogItem} object.
+	 * @param catalogItem the {@link CatalogItem} object.
 	 */
 	public void addItem(CatalogItem catalogItem) {
 
@@ -54,7 +43,7 @@ public class Catalog  {
 	 *          code. Returns <code>null</code> if the object with
 	 *          the code is not found.
 	 */
-	public CatalogItem  getItem(String code)  {
+	public CatalogItem getItem(String code)  {
 
 		for (Iterator<CatalogItem> i = getItemsIterator(); i.hasNext();) {
 
@@ -85,7 +74,7 @@ public class Catalog  {
 	 * Returns the {@link Product} object with the specified
 	 * <code>code</code>.
 	 *
-	 * @param code  the code of an product.
+	 * @param code  the code of a product.
 	 * @return  The {@link Product} object with the specified
 	 *          code. Returns <code>null</code> if the object with
 	 *          the code is not found.
@@ -96,7 +85,7 @@ public class Catalog  {
 
 			CatalogItem catalogProduct =  i.next();
 
-			if (catalogProduct.getClass().equals(code)) {
+			if (catalogProduct.getCode().equals(code)) {
 
 				return catalogProduct;
 			}

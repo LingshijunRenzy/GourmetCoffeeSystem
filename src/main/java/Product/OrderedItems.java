@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.Vector;
 
 /**
- * Maintains a collection of {@link CatalogItems} assigned to a borrower.
+ * Maintains a collection of {@link CatalogItem} assigned to a borrower.
  *
  * @author A Jiayi
  * @version 1.0.0
@@ -16,9 +16,9 @@ public class OrderedItems extends CatalogItem {
 	private static Vector<OrderedItems> items = new Vector<OrderedItems>(); // 初始化静态成员变量
 
 	/**
-	 * Sets the collection of {@link CatalogItems} to empty.
+	 * Sets the collection of {@link CatalogItem} to empty.
 	 */
-	public OrderedItems() {
+	public OrderedItems(String code, String description, double price, int quantity) {
 
 		super(code, description, price, quantity); // 调用父类构造函数（如果有的话）
 		items.add(this); // 将当前实例添加到静态集合中
