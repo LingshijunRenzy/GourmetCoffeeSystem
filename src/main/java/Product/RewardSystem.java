@@ -2,11 +2,14 @@ package Product;
 
 public class RewardSystem {  
     private static final int POINTS_PER_PURCHASE = 10; // 每次购买获得的积分  
-    static final int POINTS_FOR_DISCOUNT = 100; // 换取折扣所需的积分  
+    private static final int POINTS_FOR_DISCOUNT = 100; // 换取折扣所需的积分  
     private static final int DISCOUNT_PERCENTAGE = 10; // 折扣百分比  
   
     // 假设这是获取当前顾客购买咖啡所应获得的积分的方法  
     public int getPointsForPurchase(double purchaseAmount) {  
+        if (purchaseAmount < 0) {
+            throw new IllegalArgumentException("Purchase amount cannot be negative.");
+        }
         // 根据购买金额计算积分，这里简化处理，每次购买固定获得10积分  
         return (int) (purchaseAmount / 1) * POINTS_PER_PURCHASE;  
     }  
@@ -18,6 +21,9 @@ public class RewardSystem {
   
     // 应用折扣到购买金额  
     public double applyDiscount(double purchaseAmount) {  
+        if (purchaseAmount < 0) {
+            throw new IllegalArgumentException("Purchase amount cannot be negative.");
+        }
         return purchaseAmount * (100 - DISCOUNT_PERCENTAGE) / 100;  
     }  
   
