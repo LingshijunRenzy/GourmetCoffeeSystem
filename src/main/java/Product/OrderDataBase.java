@@ -1,10 +1,11 @@
 package Product;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 public class OrderDataBase {
-    private static Map<UUID,Order> orders;
+    private static Map<UUID,Order> orders = new HashMap<>();
 
 
     public OrderDataBase(){}
