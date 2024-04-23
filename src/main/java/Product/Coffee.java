@@ -1,6 +1,6 @@
 package Product;
 
-public class Coffee extends Product {
+public class Coffee extends aProduct {
 
     private String acidity;
 

@@ -1,7 +1,5 @@
 package Product;
 
-import java.util.*;
-
 public class CatalogItem {
 
 	private String  code;
@@ -31,16 +29,17 @@ public class CatalogItem {
     }
 
 	/**
-	 * Catalog的构造函数（通过Product)
+	 * 从产品创建CatalogItem
+	 *
+	 * @param product 产品
+	 * @param quantity 数量
 	 */
-	public CatalogItem(Product product){
+	public CatalogItem(Product product, int quantity){
 		this.code = product.getCode();
 
 		this.description = product.getDescription();
 
 		this.price = product.getPrice();
-
-		this.quantity = product.getQuantity();
 	}
 
 
@@ -60,7 +59,6 @@ public class CatalogItem {
 	 *          <code>false</code> otherwise.
 	 */
 	public boolean isAvailable() {
-
 		return available;
 	}
 	/**
@@ -69,7 +67,6 @@ public class CatalogItem {
 	 * @param newValue  the new value.
 	 */
 	public void setAvailable(boolean newValue) {
-
 		available = newValue;
 	}
 

@@ -45,39 +45,26 @@ public class CustomerDatabase {
 	}
 
 	/**
-	 * Returns the {@link Customer} object with the specified
-	 * <code>id</code>.
-	 *
-	 * @param code  the id of the customer.
-	 * @return  The {@link Customer} object with the specified id.
-	 *          Returns <code>null</code> if the object with the
-	 *          id is not found.
-	 */
-	/*
-	 * public Customer getCustomer(String id) {
-	 * 
-	 * for (Iterator<Customer> i = getCustomersIterator(); i.hasNext();) {
-	 * 
-	 * Customer customer = (Customer) i.next();
-	 * 
-	 * if (customer.getId().equals(id)) {
-	 * 
-	 * return customer; } }
-	 * 
-	 * return null; }
-	 */
-
-	/**
 	 * Returns the number of {@link Customer} objects in this collection.
 	 *
 	 * @return  the number of {@link Customer} objects in this collection.
 	 */
 	public int  getNumberOfCustomers() {
 
-		return ProductCatalog.getNumberOfItems();
+		return customers.size();
 	}
 
-	public Customer getCustomer(String line) {
+
+	/**
+	 * Returns the {@link Customer} object with the specified
+	 * <code>id</code>.
+	 *
+	 * @param id  the id of the customer.
+	 * @return  The {@link Customer} object with the specified id.
+	 *          Returns <code>null</code> if the object with the
+	 *          id is not found.
+	 */
+	public Customer getCustomer(String id) {
 		
 		for (Iterator<Customer> i = getCustomersIterator(); i.hasNext();) {
 

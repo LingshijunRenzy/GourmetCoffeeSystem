@@ -1,50 +1,70 @@
 package Product;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class Order {
-	private List<Product> products = new ArrayList<>();
+	private final UUID orderID;
+	private List<OrderedItem> orderItems = new ArrayList<>();
 	@SuppressWarnings("unused")
 	private int totalCost;
 
+
+	/**
+	 * Constructs an <code>Order</code> object.
+	 */
+	public Order() {
+		//随机生成订单编号
+		this.orderID = UUID.randomUUID();
+	}
+
+	/**
+	 * Returns the order ID.
+	 *
+	 * @return  the order ID.
+	 */
+	public UUID getOrderID() {
+		return orderID;
+	}
+
+	/**
+	 * Adds a product to the order.
+	 *
+	 * @param product  the product to add.
+	 * @param quantity the quantity of the product to add.
+	 */
 	public void addProduct(Product product, int quantity) {
 		boolean found = false;
-		for (Product p : products) {
+		for (OrderedItem p : orderItems) {
 			if (p.getCode().equals(product.getCode())) {
 				// 如果产品已存在，则增加数量
-				p.setQuantity(Product.getQuantity() + quantity);
+				p.setQuantity(p.getQuantity() + quantity);
 				found = true;
 				break;
 			}
 		}
 		if (!found) {
 			// 如果产品不存在，则添加新产品并设置数量
-			product.setQuantity(quantity);
-			products.add(product);
+			orderItems.add(new OrderedItem(product, quantity));
 		}
 		calculateTotalCost();
 	}
 
 	public void removeProduct(String code) {
-		products.removeIf(p -> p.getCode().equals(code));
+		orderItems.removeIf(p -> p.getCode().equals(code));
 		calculateTotalCost();
 	}
 
 	private void calculateTotalCost() {
 
 		totalCost = 0;
-		for (Product p : products) {
+		for (OrderedItem p : orderItems) {
 			// 假设每个产品的价格是单价乘以数量
 			totalCost += p.getPrice() * p.getQuantity();
 		}
 	}
 
-	public List<Product> getProducts() {
-		return Collections.unmodifiableList(new ArrayList<>(products));
+	public List<OrderedItem> getProducts() {
+		return Collections.unmodifiableList(new ArrayList<>(orderItems));
 	}
 
 	public double getTotalCost() {
@@ -54,7 +74,7 @@ public class Order {
 	// Placeholder method to get price by code
 	@SuppressWarnings("unused")
 	private double getPriceByCode(String code) {
-		Optional<Product> productOptional = products.stream().filter(p -> p.getCode().equals(code)).findFirst();
+		Optional<OrderedItem> productOptional = orderItems.stream().filter(p -> p.getCode().equals(code)).findFirst();
 
 		if (productOptional.isPresent()) {
 			return productOptional.get().getPrice();
@@ -64,4 +84,8 @@ public class Order {
 		}
 	}
 
+
+	public List<OrderedItem> getOrderedItems() {
+		return orderItems;
+	}
 }

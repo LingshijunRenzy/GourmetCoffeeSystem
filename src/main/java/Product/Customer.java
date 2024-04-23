@@ -1,55 +1,45 @@
 package Product;
 
-public class Customer {  
+import java.util.Iterator;
+import java.util.List;
+import java.util.UUID;
+import java.util.Vector;
+
+public class Customer {
 	private String  id;
-
-	/* Name of the borrower.*/
 	private String  name;
+	private int points;
 
-	/* Items ordered by the customer.*/
-	
-	private OrderedItems orderedItem;
+	private Vector<Order> orders = new Vector<Order>();
 
-	private int points;  
-	  
+
+
 	/**
-	 * Constructs a <code>Borrower</code> object.
-	 * <p>
-	 * The collection of the borrowed items is initially empty.
-	 * </p>
+	 * Constructs a <code>Customer</code> object.<p>
+	 * The collection of the borrowed items is initially empty.</p>
 	 *
-	 * @param initialId  the id of the customer.
-	 * @param initialName  the name of the customer.
-	 * @param initialpoints the points of the customer.
+	 * @param id  the id of the customer.
+	 * @param name  the name of the customer.
+	 * @param points the points of the customer.
 	 */
-	public Customer(String initialId, String initialName,int initialpoints,OrderedItems OrderedItems) {
-
-		id = initialId;
-		name = initialName;
-		points = initialpoints; 
-		orderedItem = OrderedItems;
-		
+	public Customer(String id, String name, int points) {
+		this.id = id;
+		this.name = name;
+		this.points = points;
 	}
 
+
+
 	/**
-	 * Returns the identification number of this borrower.
+	 * Returns the identification number of this customer.
 	 *
-	 * @return  the identification number of this borrower.
+	 * @return  the identification number of this customer.
 	 */
 	public String getId()  {
-
 		return  id;
 	}
 
-	/**
-	 * Returns the borrowed items collection.
-	 *
-	 * @return  a {@link BorrowedItems} object.
-	 */
-	public OrderedItems getOrderedItems() {
 
-		return orderedItem;
-	}
 
 	/**
 	 * Returns <code>true</code> if the id of this borrower is
@@ -88,7 +78,9 @@ public class Customer {
             System.out.println("Insufficient points for deduction.");  
         }  
     }  
-  
+
+
+
     @Override  
     public String toString() {  
         return "Customer{" +  
@@ -99,6 +91,62 @@ public class Customer {
     }
 
 
-	
-    
+
+	public void addOrder(Order order) {
+		orders.add(order);
+	}
+
+	public void removeOrder(UUID orderID) {
+		orders.removeIf(o -> o.getOrderID().equals(orderID));
+	}
+
+	public Order getOrder(UUID orderID) {
+		for (Order o : orders) {
+			if (o.getOrderID().equals(orderID)) {
+				return o;
+			}
+		}
+		return null;
+	}
+
+	public int getNumberOfOrders() {
+		return orders.size();
+	}
+
+	public Iterator<Order> getOrdersIterator() {
+		return orders.iterator();
+	}
+
+
+	/**
+	 * Buys a product and create a new order.
+	 *
+	 * @param product  the product to buy.
+	 * @param quantity the quantity of the product to buy.
+	 */
+	public void buy(Product product, int quantity) {
+		Order order = new Order();
+		order.addProduct(product, quantity);
+		addOrder(order);
+		OrderDataBase.addOrder(order);
+	}
+
+
+	/**
+	 * Buys a list of products and create a new order.
+	 * The number of products and quantities must be the same.
+	 * @param products
+	 * @param quantities
+	 */
+	public void buy(List<Product> products, List<Integer> quantities) {
+		if(products.size() != quantities.size()) {
+			throw new IllegalArgumentException("The number of products and quantities must be the same.");
+		}
+		Order order = new Order();
+		for (int i = 0; i < products.size(); i++) {
+			order.addProduct(products.get(i), quantities.get(i));
+		}
+		addOrder(order);
+		OrderDataBase.addOrder(order);
+	}
 }

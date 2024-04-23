@@ -10,100 +10,110 @@ import java.util.Map.Entry;
  * @version 1.1.0
  * @see Catalog
  * @see CatalogItem
- * @see Product
+ * @see aProduct
  * @see Coffee
  * @see CustomerDatabase
  * @see Customer
- * @see OrderedItems
+ * @see OrderedItem
  */
 
 public class Management {
 
-	private static Map<OrderedItems, Double> totalSalesPerProduct;
+	private static Map<OrderedItem, Double> totalSalesPerProduct;
 	private static BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
 	private static PrintWriter stdOut = new PrintWriter(System.out, true);
 	private static PrintWriter stdErr = new PrintWriter(System.err, true);
 	Scanner scanner = new Scanner(System.in);
 	private static Catalog catalog;
-	private CustomerDatabase customerDB;
-	private OrderedItems[] orderedItem;
+	private static ProductDatabase productDB;
+	private static CustomerDatabase customerDB;
+	private OrderedItem[] orderedItem;
 
-	
-
+	private static void loadProductDB(){
+		productDB = new ProductDatabase();
+		productDB.addProduct(new Product("B001", "酱香拿铁", 30));
+		productDB.addProduct(new Product("B002", "美式咖啡", 10));
+		productDB.addProduct(new Product("B003", "茉莉拿铁", 18));
+		productDB.addProduct(new Product("B004", "生椰拿铁", 18));
+		productDB.addProduct(new Product("B005", "椰皇拿铁", 20));
+		productDB.addProduct(new Product("B006", "丝绒拿铁", 20));
+		productDB.addProduct(new Product("B007", "黑糖拿铁", 21));
+		productDB.addProduct(new Product("B008", "香草拿铁", 20));
+		productDB.addProduct(new Product("B009", "生酪拿铁", 23));
+		productDB.addProduct(new Product("B010", "厚乳拿铁", 21));
+		productDB.addProduct(new Product("B011", "巧克力拿铁", 21));
+		productDB.addProduct(new Product("B012", "巧克力瑞纳冰", 22));
+		productDB.addProduct(new Product("B013", "抹茶瑞纳冰", 22));
+		productDB.addProduct(new Product("B014", "焦糖玛奇朵", 20));
+	}
 	/*
 	 * Loads the information of a Catalog object.
 	 */
-	private static Catalog load() {
-
-		Catalog catalog = new Catalog();
-
-		catalog.addItem(new CatalogItem("B001", "酱香拿铁", 30, 252));
-		catalog.addItem(new CatalogItem("B002", "美式咖啡", 10, 252));
-		catalog.addItem(new CatalogItem("B003", "茉莉拿铁", 18, 252));
-		catalog.addItem(new CatalogItem("B004", "生椰拿铁", 18, 252));
-		catalog.addItem(new CatalogItem("B005", "椰皇拿铁", 20, 252));
-		catalog.addItem(new CatalogItem("B006", "丝绒拿铁", 20, 252));
-		catalog.addItem(new CatalogItem("B007", "黑糖拿铁", 21, 252));
-		catalog.addItem(new CatalogItem("B008", "香草拿铁", 20, 252));
-		catalog.addItem(new CatalogItem("B009", "生酪拿铁", 23, 252));
-		catalog.addItem(new CatalogItem("B010", "厚乳拿铁", 21, 252));
-		catalog.addItem(new CatalogItem("B011", "巧克力拿铁", 21, 252));
-		catalog.addItem(new CatalogItem("B012", "巧克力瑞纳冰", 22, 252));
-		catalog.addItem(new CatalogItem("B013", "抹茶瑞纳冰", 22, 252));
-		catalog.addItem(new CatalogItem("B014", "焦糖玛奇朵", 20, 252));
-
-		return catalog;
+	private static void loadCatalog() {
+		catalog.addItem(new CatalogItem(productDB.getProduct("B001"), 252));
+		catalog.addItem(new CatalogItem(productDB.getProduct("B002"), 252));
+		catalog.addItem(new CatalogItem(productDB.getProduct("B003"), 252));
+		catalog.addItem(new CatalogItem(productDB.getProduct("B004"), 252));
+		catalog.addItem(new CatalogItem(productDB.getProduct("B005"), 252));
+		catalog.addItem(new CatalogItem(productDB.getProduct("B006"), 252));
+		catalog.addItem(new CatalogItem(productDB.getProduct("B007"), 252));
+		catalog.addItem(new CatalogItem(productDB.getProduct("B008"), 252));
+		catalog.addItem(new CatalogItem(productDB.getProduct("B009"), 252));
+		catalog.addItem(new CatalogItem(productDB.getProduct("B010"), 252));
+		catalog.addItem(new CatalogItem(productDB.getProduct("B011"), 252));
+		catalog.addItem(new CatalogItem(productDB.getProduct("B012"), 252));
+		catalog.addItem(new CatalogItem(productDB.getProduct("B013"), 252));
+		catalog.addItem(new CatalogItem(productDB.getProduct("B014"), 252));
 	}
 
 	/*
 	 * Loads a CustomerDatabase object.
 	 */
-	private static CustomerDatabase load(Catalog catalog) {
+	private static void loadCustomerDB(Catalog catalog) {
 
-		CustomerDatabase customerDB = new CustomerDatabase();
+		customerDB = new CustomerDatabase();
 
-		Customer customer = new Customer("ID001", "James Addy", 0);
-		customerDB.addCustomer(customer);
-		customer.getOrderedItems().addItem((OrderedItems) catalog.getItem("B003"));
-		customer.getOrderedItems().addItem((OrderedItems) catalog.getItem("B001"));
-		customer.getOrderedItems().addItem((OrderedItems) catalog.getItem("B012"));
+		//James Addy
+		customerDB.addCustomer(new Customer("ID001", "James Addy", 0));
+		customerDB.getCustomer("ID001").buy(productDB.getProduct("B001"), 2);
+		customerDB.getCustomer("ID001").buy(productDB.getProduct("B003"), 1);
+		customerDB.getCustomer("ID001").buy(productDB.getProduct("B005"), 1);
 
-		customer = new Customer("ID002", "John Doust", 0);
-		customerDB.addCustomer(customer);
+		//John Doust
+		customerDB.addCustomer(new Customer("ID002", "John Doust", 0));
 
-		customer = new Customer("ID003", "Constance Foster", 0);
-		customerDB.addCustomer(customer);
-		customer.getOrderedItems().addItem((OrderedItems) catalog.getItem("B006"));
+		//Constance Foster
+		customerDB.addCustomer(new Customer("ID003", "Constance Foster", 0));
+		customerDB.getCustomer("ID003").buy(productDB.getProduct("B002"), 1);
 
-		customer = new Customer("ID004", "Harold Gurske", 0);
-		customerDB.addCustomer(customer);
-		customer.getOrderedItems().addItem((OrderedItems) catalog.getItem("B002"));
+		//Harold Gurske
+		customerDB.addCustomer(new Customer("ID004", "Harold Gurske", 0));
+		customerDB.getCustomer("ID004").buy(productDB.getProduct("B002"), 1);
 
-		customer = new Customer("ID005", "Mary A. Rogers", 0);
-		customerDB.addCustomer(customer);
+		//Mary A. Rogers
+		customerDB.addCustomer(new Customer("ID005", "Mary A. Rogers", 0));
 
-		customer = new Customer("ID006", "Laura Novelle", 0);
-		customerDB.addCustomer(customer);
-		customer.getOrderedItems().addItem((OrderedItems) catalog.getItem("B007"));
-		customer.getOrderedItems().addItem((OrderedItems) catalog.getItem("B009"));
+		//Laura Novelle
+		customerDB.addCustomer(new Customer("ID006", "Laura Novelle", 0));
+		customerDB.getCustomer("ID006").buy(productDB.getProduct("B007"), 1);
+		customerDB.getCustomer("ID006").buy(productDB.getProduct("B009"), 1);
 
-		customer = new Customer("ID007", "David M. Prescott", 0);
-		customerDB.addCustomer(customer);
-		customer.getOrderedItems().addItem((OrderedItems) catalog.getItem("B011"));
+		//David M. Prescott
+		customerDB.addCustomer(new Customer("ID007", "David M. Prescott", 0));
+		customerDB.getCustomer("ID007").buy(productDB.getProduct("B011"), 1);
 
-		customer = new Customer("ID008", "Francis Matthews", 0);
-		customerDB.addCustomer(customer);
-		customer.getOrderedItems().addItem((OrderedItems) catalog.getItem("B003"));
-		customer.getOrderedItems().addItem((OrderedItems) catalog.getItem("B005"));
+		//Francis Matthews
+		customerDB.addCustomer(new Customer("ID008", "Francis Matthews", 0));
+		customerDB.getCustomer("ID008").buy(productDB.getProduct("B003"), 1);
+		customerDB.getCustomer("ID008").buy(productDB.getProduct("B005"), 1);
 
-		customer = new Customer("ID009", "Thomas Ferris", 0);
-		customerDB.addCustomer(customer);
+		//Thomas Ferris
+		customerDB.addCustomer(new Customer("ID009", "Thomas Ferris", 0));
 
-		customer = new Customer("ID010", "John Johnson", 0);
-		customerDB.addCustomer(customer);
-		customer.getOrderedItems().addItem((OrderedItems) catalog.getItem("B004"));
+		//John Johnson
+		customerDB.addCustomer(new Customer("ID010", "John Johnson", 0));
+		customerDB.getCustomer("ID010").buy(productDB.getProduct("B004"), 1);
 
-		return customerDB;
 	}
 
 	/*
@@ -179,6 +189,7 @@ public class Management {
 	}
 
 	private void displayOrderCountForProduct(String code) {
+		//TODO bug to be fixed
 		CatalogItem product = null;
 		try {
 			product = readProduct();
@@ -188,17 +199,16 @@ public class Management {
 		}
 
 		if (product != null) {
-
 			stdOut.println("  Name: " + product.getDescription());
 
-			if (OrderedItems.getNumberOfItems() == 0) {
+			if (OrderedItem.getNumberOfItems() == 0) {
 				stdOut.println("  No items ordered");
 			} else {
 				stdOut.println("  Items Ordered:");
-				for (Iterator<OrderedItems> i = (Iterator<OrderedItems>) OrderedItems.getItemsIterator(); i
+				for (Iterator<OrderedItem> i = (Iterator<OrderedItem>) OrderedItem.getItemsIterator(); i
 						.hasNext();) {
 
-					OrderedItems item = i.next();
+					OrderedItem item = i.next();
 
 					stdOut.println("    " + item.getCode() + " " + item.getDescription());
 				}
@@ -215,11 +225,17 @@ public class Management {
 		return this.catalog.getProduct(stdIn.readLine());
 	}
 
+
+
+	/*
+	 * Displays the number of orders with a specific product.
+	 */
 	private void displayTotalSalesPerProduct() throws IOException {
+		//TODO bug to be fixed
 		// 遍历 orderedItems 中的每个 OrderedItem 对象
-		for (OrderedItems orderedItem : orderedItem) {
+		for (OrderedItem orderedItem : orderedItem) {
 			// 获取当前产品的ID
-			OrderedItems productId = (OrderedItems) orderedItem.getCode();
+			OrderedItem productId = (OrderedItem) orderedItem.getCode();
 			int quantity = orderedItem.getQuantity(); // 获取数量
 			double pricePerUnit = orderedItem.getPrice(); // 获取单价
 
@@ -230,7 +246,7 @@ public class Management {
 		}
 
 		// 显示每个产品的总销售额
-		for (Entry<OrderedItems, Double> entry : totalSalesPerProduct.entrySet()) {
+		for (Entry<OrderedItem, Double> entry : totalSalesPerProduct.entrySet()) {
 			stdOut.println("Product ID: " + entry.getKey() + ", Total Sales: $" + entry.getValue());
 		}
 	}
@@ -341,15 +357,19 @@ public class Management {
 
 			stdOut.println("  Name: " + customer.getName());
 
-			if (OrderedItems.getNumberOfItems() == 0) {
-				stdOut.println("  No items ordered");
+			if (customer.getNumberOfOrders() == 0) {
+				stdOut.println("  No order");
 			} else {
-				stdOut.println("  Items Ordered:");
-				for (Iterator<OrderedItems> i = OrderedItems.getItemsIterator(); i.hasNext();) {
+				stdOut.println("  Orders:");
+				for (Iterator<Order> i = customer.getOrdersIterator(); i.hasNext();) {
 
-					OrderedItems item = (OrderedItems) i.next();
+					Order order = i.next();
 
-					stdOut.println("    " + item.getCode() + " " + item.getDescription());
+					stdOut.println("    " + order.getOrderID());
+					//循环输出订单中的产品
+					for (OrderedItem orderedItem : order.getOrderedItems()) {
+						stdOut.println("      " + orderedItem.getCode() + " " + orderedItem.getDescription());
+					}
 				}
 			}
 		} else {
@@ -387,7 +407,7 @@ public class Management {
 	 */
 	public static void main(String[] args) throws IOException {
 		totalSalesPerProduct = new HashMap<>();
-		Catalog catalog = load();
+		loadCatalog();
 		
 
 		@SuppressWarnings("unused")

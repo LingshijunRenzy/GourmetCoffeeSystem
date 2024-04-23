@@ -9,12 +9,12 @@ interface Sellable {
     double getPrice();
 }
 
-class Product implements Sellable {
+class aProduct implements Sellable {
     private String code;
     private String name;
     private double price;
 
-    public Product(String code, String name, double price) {
+    public aProduct(String code, String name, double price) {
         this.code = code;
         this.name = name;
         this.price = price;
@@ -45,7 +45,7 @@ class Product implements Sellable {
     }
 }
 
-class Order {
+class aOrder {
     private List<OrderItem> items = new ArrayList<>();
 
     public void addProduct(Sellable sellable, int quantity) {
@@ -91,8 +91,8 @@ class OrderItem {
 }
 
 public class SalesSystem {
-    private List<Order> sales = new ArrayList<>();
-    private Order currentOrder = new Order();
+    private List<aOrder> sales = new ArrayList<>();
+    private aOrder currentAOrder = new aOrder();
 
     public void displayCatalog(List<Sellable> catalog) {
         for (Sellable sellable : catalog) {
@@ -105,25 +105,25 @@ public class SalesSystem {
     }
 
     public void displayCurrentOrder() {
-        System.out.println(currentOrder);
+        System.out.println(currentAOrder);
     }
 
     public void addSellableToOrder(Sellable sellable, int quantity) {
-        currentOrder.addProduct(sellable, quantity);
+        currentAOrder.addProduct(sellable, quantity);
     }
 
     public void removeProductFromOrder(String code) {
-        currentOrder.removeProduct(code);
+        currentAOrder.removeProduct(code);
     }
 
     public void registerSale() {
-        sales.add(currentOrder);
-        currentOrder = new Order(); // Reset current order
+        sales.add(currentAOrder);
+        currentAOrder = new aOrder(); // Reset current order
     }
 
     public void displaySales() {
-        for (Order order : sales) {
-            System.out.println(order);
+        for (aOrder aOrder : sales) {
+            System.out.println(aOrder);
         }
     }
 }

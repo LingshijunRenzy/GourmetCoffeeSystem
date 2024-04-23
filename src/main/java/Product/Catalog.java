@@ -71,11 +71,11 @@ public class Catalog  {
 	
 
 	/**
-	 * Returns the {@link Product} object with the specified
+	 * Returns the {@link aProduct} object with the specified
 	 * <code>code</code>.
 	 *
 	 * @param code  the code of a product.
-	 * @return  The {@link Product} object with the specified
+	 * @return  The {@link aProduct} object with the specified
 	 *          code. Returns <code>null</code> if the object with
 	 *          the code is not found.
 	 */
@@ -97,7 +97,7 @@ public class Catalog  {
 	/**
 	 * Returns the number of products in the catalog.
 	 *
-	 * @return the number of {@link Product} objects in this catalog.
+	 * @return the number of {@link aProduct} objects in this catalog.
 	 */
 	public int  getNumberOfProducts()  {
 
