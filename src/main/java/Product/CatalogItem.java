@@ -1,134 +1,113 @@
 package Product;
 
-public class CatalogItem {
+import java.util.*;
 
-	private String  code;
+public class Catalog  {
+	/* Collection of <code>Product</code> objects.*/
+	private Vector<CatalogItem> items;
 
-	private String description;
+	/**
+	 * Constructs an empty catalog.
+	 */
+	public Catalog() {
 
-	private double price;
+		items = new Vector<CatalogItem>();
+	}
 
-	private int quantity;
+	/**
+	 * Adds a {@link CatalogItem} object to this catalog.
+	 *
+	 * @param catalogItem the {@link CatalogItem} object.
+	 */
+	public void addItem(CatalogItem catalogItem) {
 
-	private boolean available;
+		items.add(catalogItem);
+	}
+
+	/**
+	 * Returns an iterator over the items in this catalog.
+	 *
+	 * return  an {@link Iterator}
+	 */
+	public Iterator<CatalogItem> getItemsIterator() {
+
+		return items.iterator();
+	}
+
+	/**
+	 * Returns the {@link CatalogItem} object with the specified
+	 * <code>code</code>.
+	 *
+	 * @param code  the code of an item.
+	 * @return  The {@link CatalogItem} object with the specified
+	 *          code. Returns <code>null</code> if the object with
+	 *          the code is not found.
+	 */
+	public CatalogItem getItem(String code)  {
+
+		for (Iterator<CatalogItem> i = getItemsIterator(); i.hasNext();) {
+
+			CatalogItem catalogItem = i.next();
+
+			if (catalogItem.getCode().equals(code)) {
+
+				return catalogItem;
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the number of items in the catalog.
+	 *
+	 * @return the number of {@link CatalogItem} objects in this catalog.
+	 */
+	public int  getNumberOfItems()  {
+
+		return items.size();
+	}
 
 	
-	/**
-	 * CatalogItem的构造函数
-	 */
-    public CatalogItem(String code, String description, double price, int quantity) {  
-
-        this.code = code;
-
-        this.description = description;  
-
-        this.price = price;  
-        
-        this.quantity = quantity;
-
-    }
 
 	/**
-	 * 从产品创建CatalogItem
+	 * Returns the {@link aProduct} object with the specified
+	 * <code>code</code>.
 	 *
-	 * @param product 产品
-	 * @param quantity 数量
+	 * @param code  the code of a product.
+	 * @return  The {@link aProduct} object with the specified
+	 *          code. Returns <code>null</code> if the object with
+	 *          the code is not found.
 	 */
-	public CatalogItem(Product product, int quantity){
-		this.code = product.getCode();
+	public CatalogItem  getProduct(String code)  {
 
-		this.description = product.getDescription();
+		for (Iterator<CatalogItem> i = getItemsIterator(); i.hasNext();) {
 
-		this.price = product.getPrice();
+			CatalogItem catalogProduct =  i.next();
+
+			if (catalogProduct.getCode().equals(code)) {
+
+				return catalogProduct;
+			}
+		}
+
+		return null;
 	}
 
-
 	/**
-	 * Returns the code of this item.
+	 * Returns the number of products in the catalog.
 	 *
-	 * @return  the code of this item.
+	 * @return the number of {@link aProduct} objects in this catalog.
 	 */
-	public String getCode() {
-		return  code;
-	}
-	public void setCode(String code) { this.code = code; }
+	public int  getNumberOfProducts()  {
 
-
-	/**
-	 * @return  <code>true</code> if the item is available;
-	 *          <code>false</code> otherwise.
-	 */
-	public boolean isAvailable() {
-		return available;
-	}
-	/**
-	 * Sets the value of instance variable <code>available</code>.
-	 *
-	 * @param newValue  the new value.
-	 */
-	public void setAvailable(boolean newValue) {
-		available = newValue;
+		return items.size();
 	}
 
-	/**
-	 * Returns <code>true</code> if the code of this catalog item is
-	 * equal to the code of the argument
-	 *
-	 * @param object  object with which this catalog item is compared.
-	 * @return  <code>true</code> if the code of this catalog item is
-	 *          equal to the code of the argument; <code>false</code>
-	 *          otherwise.
-	 */
-	public boolean equals(Object object) {
-
-		return object instanceof CatalogItem
-		       && getCode().equals(((CatalogItem) object).getCode());
+	public Iterator<CatalogItem> getProductsIterator() {
+		// TODO Auto-generated method stub
+		return items.iterator();
 	}
 
-	/**
-	 * Returns the string representation of this catalog item.
-	 *
-	 * @return  the string representation of this catalog item.
-	 */
-	public String toString() {
-
-		return  getCode() + "_" + getDescription() + "_" + getPrice()+ "_" + getQuantity()
-		        + "_" + isAvailable();
-	}
-
-	public int getQuantity() {
-		return quantity;
-	}
-	public void setQuantity(int quantity) { this.quantity = quantity; }
-
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) { this.description = description; }
-
-	public double getPrice() {
-		return price;
-	}
-	public void setPrice(double price) { this.price = price; }
-
-//	public CatalogItem getItem(String code) {
-//
-//		for (Iterator<CatalogItem> i = getItemsIterator(); i.hasNext();) {
-//
-//			CatalogItem catalogItem = (CatalogItem) i.next();
-//
-//			if (catalogItem.getCode().equals(code)) {
-//
-//				return catalogItem;
-//			}
-//		}
-//
-//		return null;
-//	}
-
-//	private Iterator<CatalogItem> getItemsIterator() {
-//
-//		return items.iterator();
-//	}
-
+	
 }
