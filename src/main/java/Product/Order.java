@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Order {
 	private final UUID orderID;
-	private List<OrderedItem> orderItems = new ArrayList<>();
+	private static List<OrderedItem> orderItems = new ArrayList<>();
 	@SuppressWarnings("unused")
 	private int totalCost;
 
@@ -88,4 +88,9 @@ public class Order {
 	public List<OrderedItem> getOrderedItems() {
 		return orderItems;
 	}
+	 // 获取订单项迭代器的方法  
+    public static Iterator<OrderedItem> getItemsIterator() {  
+        return orderItems.iterator();  
+    }  
+  
 }
