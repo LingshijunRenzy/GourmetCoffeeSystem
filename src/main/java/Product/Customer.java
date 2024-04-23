@@ -84,8 +84,7 @@ public class Customer {
     @Override  
     public String toString() {  
         return "Customer{" +  
-                "name='" + name +  
-                ",ordereditems:" + orderedItem + 
+                "name='" + name +
                 ", points=" + points +  
                 '}';  
     }
