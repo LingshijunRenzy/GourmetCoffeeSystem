@@ -3,7 +3,7 @@ package Product;
 import java.io.*;
 import java.util.*;
 import java.util.Map.Entry;
-
+import Product.*;
 /**
  * This class implements a library system.
  *
@@ -19,12 +19,12 @@ import java.util.Map.Entry;
 
 public class Management {
 
-	private static Map<OrderedItem, Double> totalSalesPerProduct;
+	private static Map<String, Double> totalSalesPerProduct;
 	private static BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
 	private static PrintWriter stdOut = new PrintWriter(System.out, true);
 	private static PrintWriter stdErr = new PrintWriter(System.err, true);
 	Scanner scanner = new Scanner(System.in);
-	private static Catalog catalog;
+	private static Catalog catalog = new Catalog();
 	private static ProductDatabase productDB;
 	private static CustomerDatabase customerDB;
 	private OrderedItem[] orderedItem;
@@ -127,7 +127,7 @@ public class Management {
 	private void run() throws IOException {
 
 		int choice = getChoice();
-
+		SalesSystem salesystem = new SalesSystem();
 		while (choice != 0) {
 
 			if (choice == 1) {
@@ -137,13 +137,13 @@ public class Management {
 			} else if (choice == 3) {
 				displayCustomer();
 			} else if (choice == 4) {
-				addProductToOrder();
+				salesystem.addSellableToOrder(stdIn.readLine(), stdIn.read(),stdIn.readLine());
 			} else if (choice == 5) {
-				removeProductFromOrder();
+				salesystem.removeProductFromOrder(stdIn.readLine());
 			} else if (choice == 6) {
-				registerSale();
+				salesystem.registerSale();
 			} else if (choice == 7) {
-				displaySales();
+				salesystem.displaySales();
 			} else if (choice == 8) {
 				displayOrderCountForProduct(stdIn.readLine());// 显示具有特定产品的订单数量,需要传递产品ID给commander
 			} else if (choice == 9) {
@@ -160,20 +160,7 @@ public class Management {
 		}
 	}
 
-	private void addProductToOrder() {
-		// TODO Auto-generated method stub
-
-	}
-
-	private void removeProductFromOrder() {
-		// TODO Auto-generated method stub
-
-	}
-
-	private void registerSale() {
-		// TODO Auto-generated method stub
-
-	}
+	
 
 	private void displaySales() {
 		if (customerDB.getNumberOfCustomers() == 0) {
@@ -201,7 +188,7 @@ public class Management {
 		if (product != null) {
 			stdOut.println("  Name: " + product.getDescription());
 
-			if (OrderedItem.getNumberOfItems() == 0) {
+			if (OrderedItem.getQuantity() == 0) {
 				stdOut.println("  No items ordered");
 			} else {
 				stdOut.println("  Items Ordered:");
@@ -230,13 +217,26 @@ public class Management {
 	/*
 	 * Displays the number of orders with a specific product.
 	 */
+	@SuppressWarnings("null")
 	private void displayTotalSalesPerProduct() throws IOException {
+		YourClass yourClassInstance = new YourClass();  
+		  
+        // 创建OrderedItem对象  
+        OrderedItem item1 = new OrderedItem("B001", "酱香拿铁", 30, 1);  
+        OrderedItem item2 = new OrderedItem("B002", "美式咖啡", 10,1);  
+  
+        // 将OrderedItem对象添加到orderedItems集合中  
+        yourClassInstance.addOrderedItem(item1);  
+        yourClassInstance.addOrderedItem(item2);  
+  
+        // 现在orderedItems集合包含两个OrderedItem对象  
+        // 你可以进一步处理这个集合，比如调用displayTotalSalesPerProduct方法  
 		//TODO bug to be fixed
 		// 遍历 orderedItems 中的每个 OrderedItem 对象
 		for (OrderedItem orderedItem : orderedItem) {
 			// 获取当前产品的ID
-			OrderedItem productId = (OrderedItem) orderedItem.getCode();
-			int quantity = orderedItem.getQuantity(); // 获取数量
+			String productId = orderedItem.getCode();
+			int quantity = OrderedItem.getQuantity(); // 获取数量
 			double pricePerUnit = orderedItem.getPrice(); // 获取单价
 
 			// 计算当前产品的总销售额，并更新到 map 中
@@ -246,7 +246,7 @@ public class Management {
 		}
 
 		// 显示每个产品的总销售额
-		for (Entry<OrderedItem, Double> entry : totalSalesPerProduct.entrySet()) {
+		for (Entry<String, Double> entry : totalSalesPerProduct.entrySet()) {
 			stdOut.println("Product ID: " + entry.getKey() + ", Total Sales: $" + entry.getValue());
 		}
 	}
@@ -271,7 +271,7 @@ public class Management {
 
 				// stdErr.println();
 
-				if (0 <= input && 6 >= input) {
+				if (0 <= input && 9 >= input) {
 					break;
 				} else {
 					stdErr.println("Invalid choice:  " + input);
@@ -407,11 +407,13 @@ public class Management {
 	 */
 	public static void main(String[] args) throws IOException {
 		totalSalesPerProduct = new HashMap<>();
+		loadProductDB();
+		loadCustomerDB(catalog);
 		loadCatalog();
 		
 
 		@SuppressWarnings("unused")
-		CustomerDatabase customerDB = load(catalog);
+//		CustomerDatabase customerDB = load(catalog);
 
 		Management management = new Management();
 
