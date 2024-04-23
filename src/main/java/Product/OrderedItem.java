@@ -1,5 +1,7 @@
 package Product;
 
+import java.util.Iterator;
+
 /**
  * Maintains a collection of {@link CatalogItem} assigned to a borrower.
  *
@@ -9,7 +11,7 @@ package Product;
  */
 public class OrderedItem {
 	/* Number of ordered product.*/
-	private int quantity;
+	private static int quantity;
 
 	/* The product itself*/
 	private Product product;
@@ -31,7 +33,7 @@ public class OrderedItem {
 	/**
 	 * Returns the quantity of items.
 	 */
-	public int getQuantity() {
+	public static int getQuantity() {
 		return quantity;
 	}
 
@@ -90,4 +92,11 @@ public class OrderedItem {
 	public void setPrice(double price) {
 		product.setPrice(price);
 	}
+
+	public static Iterator<OrderedItem> getItemsIterator() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+
 }
